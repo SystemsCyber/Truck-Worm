@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "gpio.h": "c",
+        "esp_spiffs.h": "c",
+        "esp_https_ota.h": "c",
+        "esp_ota_ops.h": "c"
+    }
+}
