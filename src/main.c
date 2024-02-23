@@ -46,7 +46,7 @@ static char firmware_buffer[FIRMWARE_BUFFER_SIZE];
     #define WIFI_AP_SSID_PREFIX "VULN ELD:" // Vulnerable ELD
 #endif
 #define WIFI_STA_SSID_PREFIX "VULN ELD:" // Always search for vulnerable ELDs
-#define WIFI_PASS "deadbeef77"
+#define WIFI_PASS "de******77"
 #define MAX_RETRY 5
 static int retry_num = 0;
 static char ap_ssid[32];
