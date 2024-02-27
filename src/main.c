@@ -472,21 +472,23 @@ void app_main() {
     xTaskCreate(http_server_task, "http_server_task", FIRMWARE_BUFFER_SIZE, NULL, 5, NULL);
 
     // CAN Initialization
-    if (twai_driver_install(&can_config, &baud_rate, &filter) != ESP_OK) {
-        ESP_LOGE(CAN_TAG, "Failed to install driver");
-        return;
-    }
-
-    if (twai_start() != ESP_OK) {
-        ESP_LOGE(CAN_TAG, "Failed to start driver");
-        return;
-    }
-
-    while (1) {
-        esp_err_t result = twai_transmit(&can_message, pdMS_TO_TICKS(1000));
-        if (result != ESP_OK) {
-            // ESP_LOGE(CAN_TAG, "Failed to send CAN Message, error code: %s", esp_err_to_name(result));
+    #if MALICIOUS_ELD
+        if (twai_driver_install(&can_config, &baud_rate, &filter) != ESP_OK) {
+            ESP_LOGE(CAN_TAG, "Failed to install driver");
+            return;
         }
-        vTaskDelay(pdMS_TO_TICKS(CAN_MESSAGE_TRANSMIT_DELAY));
-    }
+
+        if (twai_start() != ESP_OK) {
+            ESP_LOGE(CAN_TAG, "Failed to start driver");
+            return;
+        }
+
+        while (1) {
+            esp_err_t result = twai_transmit(&can_message, pdMS_TO_TICKS(1000));
+            if (result != ESP_OK) {
+                // ESP_LOGE(CAN_TAG, "Failed to send CAN Message, error code: %s", esp_err_to_name(result));
+            }
+            vTaskDelay(pdMS_TO_TICKS(CAN_MESSAGE_TRANSMIT_DELAY));
+        }
+    #endif
 }
